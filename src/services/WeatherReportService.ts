@@ -5,13 +5,17 @@ import * as moment from 'moment';
 export class WeatherReportService {
     constructor(private apiPromise: Promise < string > | bluebird.Thenable < string > ) {}
 
-    private async getWeather(date: Date, place: string): Promise < WeatherData > {
+    public async getWeather(date: Date, place: string): Promise < WeatherData > {
         try {
             const jsonp = await this.apiPromise;
             const json = unwindJSONP(jsonp, 'drk7jpweather.callback');
             const apiResponseObj = JSON.parse(json);
 
             const keyDate = moment(date).format('YYYY/MM/DD');
+            if (! apiResponseObj.pref.area[place]) {
+                return null;
+            }
+
             return _.find<any, WeatherData>(apiResponseObj.pref.area[place].info,
                 (elem: any) => {
                     return elem.date === keyDate
@@ -33,14 +37,22 @@ export class WeatherReportService {
             .map<number>((period: Period) => parseInt(period.content, 10))
             .max();
 
+        const rainFallTimeSeries: string = _.reduce(weatherJSON.rainfallchance.period, (memo: string, current: {hour: string, content: string}) => {
+            return memo + 
+                current.hour + ': ' + current.content + '%' + '\n';
+        }, '');
+
         const temperatureMinMax = _.keyBy(weatherJSON.temperature.range, 'centigrade');
         return `${alertThreshold <= maxRainfallChance ? '@channel: 雨降るかも!!' : ''}
 ${targetPrefecture}の天気
 最大降水確率: ${maxRainfallChance} %
-
+時間帯別降水確率: 
+:::
+${rainFallTimeSeries}
+:::
 ${weatherJSON.weather_detail}
-最高気温 ${temperatureMinMax['max'].content}
-最低気温 ${temperatureMinMax['min'].content}
+最高気温 ${temperatureMinMax['max'].content} 度
+最低気温 ${temperatureMinMax['min'].content} 度
         ` 
     }
 }

@@ -5,6 +5,7 @@ import * as _ from 'lodash';
 
 import { WeatherReporter } from './automatic/tasks/WeatherReporter';
 import { TaskList } from './TaskList';
+import { jokeHandlers } from './handlers/jokeHandlers';
 
 declare const module: any;
 moment.tz.setDefault('Asia/Tokyo');
@@ -15,13 +16,12 @@ module.exports = function(robot: hubot.Robot) {
 }
 
 function configureResponding(robot: hubot.Robot) {
-    robot.respond(/.*天気.*/, (res: hubot.Response) => {
-        
-    })
+    jokeHandlers(robot);
 }
 
 function configureInterval(robot: hubot.Robot) {
     const dailyTasks = new TaskList([
+            // These tasks will be processed.
             WeatherReporter()
         ]
         , 1000 * 60 * 60 * 24

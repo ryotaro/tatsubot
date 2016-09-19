@@ -8,7 +8,8 @@ import {
 export function WeatherReporter(alertThreshold: number = 40) {
     return async function(robot: hubot.Robot): Promise < void > {
         try {
-            robot.messageRoom('#bottest', await (new WeatherReportService(
+            robot.messageRoom(process.env.NODE_ENV === 'production' ? '#general' : '#bottest', 
+            await (new WeatherReportService(
                 request('http://www.drk7.jp/weather/json/13.js')
             )).getForecastMessage(
                 new Date(),
