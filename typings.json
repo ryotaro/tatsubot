@@ -1,10 +1,18 @@
 {
   "dependencies": {
-    "lodash": "registry:npm/lodash#4.0.0+20160723033700"
+    "lodash": "registry:npm/lodash#4.0.0+20160723033700",
+    "request": "registry:npm/request#2.69.0+20160428223725"
   },
   "globalDependencies": {
     "bluebird": "registry:dt/bluebird#3.0.0+20160907110115",
     "moment": "registry:dt/moment#2.11.1+20160829143156",
-    "moment-timezone": "registry:dt/moment-timezone#0.2.5+20160329220348"
+    "moment-timezone": "registry:dt/moment-timezone#0.2.5+20160329220348",
+    "node": "registry:dt/node#6.0.0+20160915134512",
+    "request-promise": "registry:dt/request-promise#3.0.0+20160906190103"
+  },
+  "globalDevDependencies": {
+    "chai": "registry:dt/chai#3.4.0+20160601211834",
+    "mocha": "registry:dt/mocha#2.2.5+20160720003353",
+    "sinon": "registry:dt/sinon#1.16.0+20160517064723"
   }
 }

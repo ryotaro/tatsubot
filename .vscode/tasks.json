@@ -5,5 +5,8 @@
     "command": "gulp",
     "isShellCommand": false,
     "args": ["--no-color"],
-    "showOutput": "always"
+    "showOutput": "always",
+    "problemMatcher": [
+        "$tsc"
+    ]
 }

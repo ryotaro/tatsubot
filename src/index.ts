@@ -15,8 +15,8 @@ module.exports = function(robot: hubot.Robot) {
 }
 
 function configureResponding(robot: hubot.Robot) {
-    robot.respond(/hello([0-9])/, (res: hubot.Response) => {
-        res.reply(`hi ${res.match[1]}`);
+    robot.respond(/.*天気.*/, (res: hubot.Response) => {
+        
     })
 }
 
